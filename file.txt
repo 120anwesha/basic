@@ -1,3 +1,7 @@
 This a new line.
 This is second new line.
+
+This is also a txt file.
+This is a software based project.
+
 This is also a PHP file.
