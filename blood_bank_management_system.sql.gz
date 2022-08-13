@@ -1,0 +1,311 @@
+-- phpMyAdmin SQL Dump
+-- version 5.1.3
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Aug 13, 2022 at 04:22 PM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 8.1.5
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `blood_bank_management_system`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `blood_camps`
+--
+
+CREATE TABLE `blood_camps` (
+  `CampID` int(11) NOT NULL,
+  `Start_date` date DEFAULT NULL,
+  `End_date` date DEFAULT NULL,
+  `Location` varchar(100) DEFAULT NULL,
+  `CampAgencyID` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `blood_donor`
+--
+
+CREATE TABLE `blood_donor` (
+  `DonorID` int(11) NOT NULL,
+  `Name` varchar(255) DEFAULT NULL,
+  `Gender` varchar(255) DEFAULT NULL,
+  `Address` varchar(255) DEFAULT NULL,
+  `Date` date DEFAULT NULL,
+  `Blood_Group` varchar(50) DEFAULT NULL,
+  `CampID` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `blood_reciever`
+--
+
+CREATE TABLE `blood_reciever` (
+  `RecieverID` int(11) NOT NULL,
+  `Name` varchar(255) DEFAULT NULL,
+  `Gender` varchar(255) DEFAULT NULL,
+  `Contact` varchar(255) DEFAULT NULL,
+  `Date` date DEFAULT NULL,
+  `Blood_Group` varchar(50) DEFAULT NULL,
+  `StockID` int(11) DEFAULT NULL,
+  `DoctorID` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `blood_request`
+--
+
+CREATE TABLE `blood_request` (
+  `RequestId` int(11) NOT NULL,
+  `Name` varchar(255) DEFAULT NULL,
+  `Gender` varchar(255) DEFAULT NULL,
+  `Contact` varchar(255) DEFAULT NULL,
+  `Date` date DEFAULT NULL,
+  `Blood_Group` varchar(50) DEFAULT NULL,
+  `StockID` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `blood_stock`
+--
+
+CREATE TABLE `blood_stock` (
+  `StockID` int(11) NOT NULL,
+  `Blood_Group` varchar(30) DEFAULT NULL,
+  `Units` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `campagency`
+--
+
+CREATE TABLE `campagency` (
+  `CampAgencyID` int(11) NOT NULL,
+  `Name` varchar(30) DEFAULT NULL,
+  `Address` varchar(30) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `doctor`
+--
+
+CREATE TABLE `doctor` (
+  `DoctorID` int(11) NOT NULL,
+  `Name` varchar(255) DEFAULT NULL,
+  `Contact` varchar(255) DEFAULT NULL,
+  `email_address` varchar(255) DEFAULT NULL,
+  `HospitalID` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hospital`
+--
+
+CREATE TABLE `hospital` (
+  `HospitalID` int(11) NOT NULL,
+  `Name` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `email_address` varchar(255) DEFAULT NULL,
+  `city` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `user_id` int(11) NOT NULL,
+  `user_name` varchar(100) DEFAULT NULL,
+  `password` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `blood_camps`
+--
+ALTER TABLE `blood_camps`
+  ADD PRIMARY KEY (`CampID`),
+  ADD KEY `CampAgencyID` (`CampAgencyID`);
+
+--
+-- Indexes for table `blood_donor`
+--
+ALTER TABLE `blood_donor`
+  ADD PRIMARY KEY (`DonorID`),
+  ADD KEY `CampID` (`CampID`);
+
+--
+-- Indexes for table `blood_reciever`
+--
+ALTER TABLE `blood_reciever`
+  ADD PRIMARY KEY (`RecieverID`),
+  ADD KEY `StockID` (`StockID`),
+  ADD KEY `DoctorID` (`DoctorID`);
+
+--
+-- Indexes for table `blood_request`
+--
+ALTER TABLE `blood_request`
+  ADD PRIMARY KEY (`RequestId`),
+  ADD KEY `StockID` (`StockID`);
+
+--
+-- Indexes for table `blood_stock`
+--
+ALTER TABLE `blood_stock`
+  ADD PRIMARY KEY (`StockID`);
+
+--
+-- Indexes for table `campagency`
+--
+ALTER TABLE `campagency`
+  ADD PRIMARY KEY (`CampAgencyID`);
+
+--
+-- Indexes for table `doctor`
+--
+ALTER TABLE `doctor`
+  ADD PRIMARY KEY (`DoctorID`),
+  ADD KEY `HospitalID` (`HospitalID`);
+
+--
+-- Indexes for table `hospital`
+--
+ALTER TABLE `hospital`
+  ADD PRIMARY KEY (`HospitalID`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`user_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `blood_camps`
+--
+ALTER TABLE `blood_camps`
+  MODIFY `CampID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `blood_donor`
+--
+ALTER TABLE `blood_donor`
+  MODIFY `DonorID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `blood_reciever`
+--
+ALTER TABLE `blood_reciever`
+  MODIFY `RecieverID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `blood_request`
+--
+ALTER TABLE `blood_request`
+  MODIFY `RequestId` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `blood_stock`
+--
+ALTER TABLE `blood_stock`
+  MODIFY `StockID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `campagency`
+--
+ALTER TABLE `campagency`
+  MODIFY `CampAgencyID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `doctor`
+--
+ALTER TABLE `doctor`
+  MODIFY `DoctorID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `hospital`
+--
+ALTER TABLE `hospital`
+  MODIFY `HospitalID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `blood_camps`
+--
+ALTER TABLE `blood_camps`
+  ADD CONSTRAINT `blood_camps_ibfk_1` FOREIGN KEY (`CampAgencyID`) REFERENCES `campagency` (`CampAgencyID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `blood_donor`
+--
+ALTER TABLE `blood_donor`
+  ADD CONSTRAINT `blood_donor_ibfk_1` FOREIGN KEY (`CampID`) REFERENCES `blood_camps` (`CampID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `blood_reciever`
+--
+ALTER TABLE `blood_reciever`
+  ADD CONSTRAINT `blood_reciever_ibfk_1` FOREIGN KEY (`StockID`) REFERENCES `blood_stock` (`StockID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `blood_reciever_ibfk_2` FOREIGN KEY (`DoctorID`) REFERENCES `doctor` (`DoctorID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `blood_request`
+--
+ALTER TABLE `blood_request`
+  ADD CONSTRAINT `blood_request_ibfk_1` FOREIGN KEY (`StockID`) REFERENCES `blood_stock` (`StockID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `doctor`
+--
+ALTER TABLE `doctor`
+  ADD CONSTRAINT `doctor_ibfk_1` FOREIGN KEY (`HospitalID`) REFERENCES `hospital` (`HospitalID`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
